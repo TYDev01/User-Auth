@@ -91,7 +91,7 @@ def forgot_password_view(request):
             new_password = PasswordReset(user=user)
             new_password.save()
             password_reset_url = reverse('reset-password', kwargs={'reset_id': new_password.reset_id})
-            full_password_reset_url = f"{request.schem()}://{request.get_host()}{password_reset_url}"
+            full_password_reset_url = f"{request.scheme}://{request.get_host()}{password_reset_url}"
             email_body = f"Reset your password using the link below: \n\n\n{full_password_reset_url}"
             email_message = EmailMessage(
                 'Reset Your Password',
@@ -137,7 +137,7 @@ def password_reset(request, reset_id):
                 messages.error(request, "password shouldn't be less than 8 characters")
 
             expiration_time = password_reset_id.created_on + timezone.timedelta(minutes=10)
-            if timezone.now > expiration_time:
+            if timezone.now() > expiration_time:
                 password_have_errors = True
                 messages.error(request, "Reset link has expired")
                 password_reset_id.delete()
@@ -159,5 +159,5 @@ def password_reset(request, reset_id):
             
 
     except PasswordReset.DoesNotExist:
-        messages.error(request, 'Invalid resed ID')
-        return redirect('resetpassword.html')
+        messages.error(request, 'Invalid reset ID')
+        return redirect('forgot')
