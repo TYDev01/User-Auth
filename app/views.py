@@ -91,7 +91,8 @@ def forgot_password_view(request):
             new_password = PasswordReset(user=user)
             new_password.save()
             password_reset_url = reverse('reset-password', kwargs={'reset_id': new_password.reset_id})
-            email_body = f"Reset your password using the link below: \n\n\n{password_reset_url}"
+            full_password_reset_url = f"{request.schem()}://{request.get_host()}{password_reset_url}"
+            email_body = f"Reset your password using the link below: \n\n\n{full_password_reset_url}"
             email_message = EmailMessage(
                 'Reset Your Password',
                 email_body,
@@ -139,6 +140,22 @@ def password_reset(request, reset_id):
             if timezone.now > expiration_time:
                 password_have_errors = True
                 messages.error(request, "Reset link has expired")
+                password_reset_id.delete()
+
+            # Reset password
+            if not password_have_errors:
+                user = password_reset_id.user
+                user.set_password(password)
+                user.save()
+
+            # Delete reset iD after use
+                password_reset_id.delete()
+
+            # Redirect to login
+                messages.success(request, 'Password reset, login now')
+                return redirect('login')
+            else:
+                return redirect('reset-password', reset_id=reset_id)
             
 
     except PasswordReset.DoesNotExist:
