@@ -84,7 +84,28 @@ def logout_view(request):
 def forgot_password_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        
+
+        try:
+            user = User.objects.get(email=email)
+            messages.success(request, f"User with the email '{email}' found")
+            new_password = PasswordReset(user=user)
+            new_password.save()
+            password_reset_url = reverse('reset-password', kwargs={'reset_id': new_password.reset_id})
+            email_body = f"Reset your password using the link below: \n\n\n{password_reset_url}"
+            email_message = EmailMessage(
+                'Reset Your Password',
+                email_body,
+                settings.EMAIL_HOST_USER,
+                [email]
+            )
+
+            email_message.fail_silently = True
+            email_message.send()
+
+            return redirect('password-reset-sent')
+        except User.DoesNotExist:
+            messages.error(request, f"User with the email '{email}' not found")
+
     return render(request, 'forgot.html')
 
 
@@ -93,4 +114,8 @@ def password_reset(request, reset_id):
 
 
 def password_reset_sent(request, reset_id):
-    return render(request, 'forgot.html')
+    if PasswordReset.objects.filter(reset_id=reset_id).exists():
+        return render(request, 'passwordresetsent.html')
+    else:
+        messages.error(request, 'Invalid resed ID')
+        return redirect('forgot')

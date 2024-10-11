@@ -1,16 +1,17 @@
 {% extends "base.html" %}
-{% load static %}
+{% comment %} {% load static %} {% endcomment %}
 {% block content %}
         <form method="POST" class="form_sty">
         {% if messages %}
             {% for message in messages %}
-                {% if message.tag == 'error' %}
-                    <p style="color: red">{{message}}</p>
+                {% if 'error' in message.tags %}
+                    <p style="color: #e82020;">{{message}}</p>
                 {% else %}
-                    <p style="color: blue">{{message}}</p>
+                    <p style="color: #0ca90c;">{{message}}</p>
                 {% endif %}
             {% endfor %}
         {% endif %}
+
             {% csrf_token %}
             <p>Enter your email address</p>
             <input type="email" required placeholder="email address" name="email">

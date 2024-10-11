@@ -40,3 +40,32 @@ body{
     cursor: pointer;
     font-size: 20px;
 }
+
+.prompt_color_fail{
+    color: #e82020;
+}
+
+.prompt_color_success {
+    color: #0ca90c;
+}
+
+.email_sent_box{
+    margin: 2rem auto;
+    padding: 2rem;
+    color: #000;
+    text-align: center;
+    width: 20rem;
+    height: 250px;
+    background: #def5ff;
+    border-radius: 1rem;
+}
+
+.email_sent_box hr{
+    margin-top: 1rem;
+}
+
+.email_sent_p{
+    margin-top: 2rem;
+    color: green;
+    font-size: 14px;
+}
