@@ -119,7 +119,7 @@ def password_reset_sent(request, reset_id):
 
 def password_reset(request, reset_id):
     try:
-        reset_id = PasswordReset.objects.get(reset_id=reset_id)
+        password_reset_id = PasswordReset.objects.get(reset_id=reset_id)
 
         if request.method == "POST":
             password = request.POST.get('password')
@@ -135,12 +135,12 @@ def password_reset(request, reset_id):
                 password_have_errors = True
                 messages.error(request, "password shouldn't be less than 8 characters")
 
-            expiration_time = reset_id.created_on + timezone.timedelta(minutes=10)
+            expiration_time = password_reset_id.created_on + timezone.timedelta(minutes=10)
             if timezone.now > expiration_time:
                 password_have_errors = True
                 messages.error(request, "Reset link has expired")
             
-            
+
     except PasswordReset.DoesNotExist:
         messages.error(request, 'Invalid resed ID')
         return redirect('resetpassword.html')
