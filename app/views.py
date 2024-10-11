@@ -109,13 +109,31 @@ def forgot_password_view(request):
     return render(request, 'forgot.html')
 
 
-def password_reset(request, reset_id):
-    return render(request, 'forgot.html')
-
-
 def password_reset_sent(request, reset_id):
     if PasswordReset.objects.filter(reset_id=reset_id).exists():
         return render(request, 'passwordresetsent.html')
     else:
         messages.error(request, 'Invalid resed ID')
         return redirect('forgot')
+
+
+def password_reset(request, reset_id):
+    try:
+        reset_id = PasswordReset.objects.get(reset_id=reset_id)
+
+        if request.method == "POST":
+            password = request.POST.get('password')
+            confirm_password = request.POST.get('confirm_password')
+
+            password_have_errors = False
+
+            if password != confirm_password:
+                password_have_errors = True
+                messages.error(request, "passwords dosen't match")
+            
+            if len(password) < 8:
+                password_have_errors = True
+                messages.error(request, "password shouldn't be less than 8 characters")
+    except PasswordReset.DoesNotExist:
+        messages.error(request, 'Invalid resed ID')
+        return redirect('resetpassword.html')
