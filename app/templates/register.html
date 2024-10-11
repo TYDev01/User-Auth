@@ -3,6 +3,15 @@
 {% block content %}
     <form method="POST" class="form_sty">
         {% csrf_token %}
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tag == 'error' %}
+                    <p style="color: red">{{message}}</p>
+                {% elif message.tag == "success" %}    
+                    <p style="color: green">{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
         <input type="text" required name="first_name" placeholder="Enter your first name">
         <input type="text" required name="last_name" placeholder="Enter your last name">
         <input type="text" required name="username" placeholder="Your username">
