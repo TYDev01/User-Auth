@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <div>
         <form method="POST" class="form_sty">
         {% if messages %}
             {% for message in messages %}
@@ -13,11 +12,8 @@
             {% endfor %}
         {% endif %}
             {% csrf_token %}
-            <input type="text" required placeholder="username" name="username">
-            <input type="password" required placeholder="password" name="password">
-            <p style="font-size: 14px; text-align: right;">Don't have an account yet? <a href="{% url "register" %}">register</a></p>
-            <p style="font-size: 14px; text-align: right;">Not sure?<a href="{% url "forgot" %}">forgot password</a></p>
-            <button type="submit">login</button>
+            <p>Enter your email address</p>
+            <input type="email" required placeholder="email address" name="email">
+            <button type="submit">Reset Password</button>
         </form>
-    </div>
 {% endblock  %}

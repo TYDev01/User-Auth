@@ -80,3 +80,17 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+def forgot_password_view(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+    return render(request, 'forgot.html')
+
+
+def password_reset(request, reset_id):
+    return render(request, 'forgot.html')
+
+
+def password_reset_sent(request, reset_id):
+    return render(request, 'forgot.html')
