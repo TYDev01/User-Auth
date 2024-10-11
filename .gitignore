@@ -1,0 +1,6 @@
+app/__pycache__
+app/migrations
+app/__init__.py
+userAuthenticate/__pycache__
+userAuthenticate/__init__.py
+userAuthenticate/settings.py

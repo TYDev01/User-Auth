@@ -1,0 +1,42 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    font-family: sans-serif;
+}
+
+.navbar{
+    display: flex;
+    width: 30%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form_sty{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 5rem 0 5px;
+}
+
+.form_sty input{
+    width: 35rem;
+    padding: 12px;
+    margin: 12px 0;
+}
+
+.form_sty button{
+    background: green;
+    color: #fff;
+    width: 30rem;
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+}

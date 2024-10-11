@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <form method="POST" class="form_sty">
+        {% csrf_token %}
+        <input type="text" required name="first_name" placeholder="Enter your first name">
+        <input type="text" required name="last_name" placeholder="Enter your last name">
+        <input type="text" required name="username" placeholder="Your username">
+        <input type="email" required name="email" placeholder="E-mail Address">
+        <input type="password" required name="password" placeholder="Enter password">
+        <input type="password" required name="password2" placeholder="confirm password">
+        <button type="submit">submit</button>
+    </form>
+{% endblock  %}

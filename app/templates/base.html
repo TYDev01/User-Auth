@@ -1,0 +1,17 @@
+<!Doctype HTML>
+<html>
+    {% load static %}
+    <head>
+        <title> User Authenticatiion </title>
+        <link rel="stylesheet" href="{% static "./css/style.css" %}">
+    </head>
+    <body>
+        <ul class="navbar">
+            <li><a href="{% url "login" %}">login</a></li>
+            <li><a href="{% url "register" %}">register</a></li>
+        </ul>
+        {% block content %}
+
+        {% endblock  %}
+    </body>
+</html>
